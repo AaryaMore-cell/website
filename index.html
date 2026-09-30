@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aethelgard | Deterministic Identity & Institutional Attestation</title>
+  <style>
+    /* ========================================================
+       AETHELGARD DESIGN SYSTEM: SLEEK ENTERPRISE MINIMALISM
+       ======================================================== */
+    :root {
+      --bg-main: #0f172a;
+      --bg-surface: #1e293b;
+      --bg-surface-elevated: #243247;
+      --bg-glass: rgba(30, 41, 59, 0.72);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: #3b82f6;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent-blue: #3b82f6;
+      --accent-blue-hover: #2563eb;
+      --accent-blue-subtle: rgba(59, 130, 246, 0.12);
+      --accent-emerald: #10b981;
+      --accent-amber: #f59e0b;
+      --accent-rose: #f43f5e;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5), 0 0 1px 1px rgba(255, 255, 255, 0.05);
+      --shadow-glow: 0 0 35px -5px rgba(59, 130, 246, 0.25);
+      --transition-base: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Inter", "Helvetica Neue", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(59, 130, 246, 0.12), transparent),
+        radial-gradient(circle at 100% 100%, rgba(30, 41, 59, 0.4), transparent 40%);
+    }
+
+    /* TOP STATUS BAR */
+    .top-strip {
+      background: rgba(15, 23, 42, 0.85);
+      border-bottom: 1px solid var(--border-subtle);
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 7px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      letter-spacing: 0.02em;
+      backdrop-filter: blur(8px);
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--accent-emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent-emerald);
+    }
+
+    /* NAVIGATION */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0 32px;
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      height: 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-primary);
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+      border-radius: 9px;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    .brand-logo svg {
+      width: 20px;
+      height: 20px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2.2;
+    }
+
+    .brand-name {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: var(--accent-blue-subtle);
+      color: var(--accent-blue);
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 600;
+      border: 1px solid rgba(59, 130, 246, 0.2);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: var(--transition-base);
+    }
+
+    .nav-link:hover {
+      color: var(--text-primary);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 9px 18px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: var(--transition-base);
+      outline: none;
+      text-decoration: none;
+    }
+
+    .btn-ghost {
+      color: var(--text-secondary);
+      background: transparent;
+      border-color: var(--border-subtle);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text-primary);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-primary {
+      background: var(--accent-blue);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-blue-hover);
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.45);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 13px;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 80px 32px 60px;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 12px;
+      border-radius: 100px;
+      background: rgba(59, 130, 246, 0.08);
+      border: 1px solid rgba(59, 130, 246, 0.2);
+      color: var(--accent-blue);
+      font-size: 12px;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 52px;
+      line-height: 1.12;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      margin-bottom: 20px;
+      background: linear-gradient(180deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      margin-bottom: 36px;
+      max-width: 540px;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+
+    .trust-metrics {
+      display: flex;
+      gap: 32px;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 28px;
+    }
+
+    .metric-item h4 {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+    }
+
+    .metric-item p {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* RIGHT SIDE INTERACTIVE PREVIEW CARD */
+    .preview-card {
+      background: var(--bg-glass);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow-card);
+      position: relative;
+    }
+
+    .preview-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border-radius: var(--radius-lg);
+      padding: 1px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), transparent 60%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .preview-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .preview-title-group h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .preview-title-group p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .live-chip {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      color: var(--accent-emerald);
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 4px;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      font-size: 13px;
+    }
+
+    .metric-label {
+      color: var(--text-secondary);
+    }
+
+    .metric-val {
+      font-weight: 500;
+      color: var(--text-primary);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    /* COMPLIANCE LOGOS */
+    .compliance-bar {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px 32px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .compliance-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+    }
+
+    .compliance-badges {
+      display: flex;
+      gap: 36px;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 500;
+      align-items: center;
+    }
+
+    /* ========================================================
+       HOSTILE BUREAUCRATIC VERIFICATION MODAL & WIZARD
+       ======================================================== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-window {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      width: 100%;
+      max-width: 640px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), var(--shadow-glow);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(12px) scale(0.98);
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-overlay.active .modal-window {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-header {
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 23, 42, 0.4);
+    }
+
+    .modal-title-wrap h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .modal-step-counter {
+      font-size: 12px;
+      color: var(--accent-blue);
+      font-weight: 600;
+      margin-top: 2px;
+      display: inline-block;
+    }
+
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 6px;
+      border-radius: var(--radius-sm);
+      display: grid;
+      place-items: center;
+      transition: var(--transition-base);
+    }
+
+    .modal-close-btn:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    /* STEP PROGRESS BAR */
+    .progress-track {
+      height: 3px;
+      background: rgba(255, 255, 255, 0.06);
+      width: 100%;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent-blue);
+      width: 33%;
+      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .modal-body {
+      padding: 28px;
+      overflow-y: auto;
+      max-height: 72vh;
+    }
+
+    .step-view {
+      display: none;
+    }
+
+    .step-view.active {
+      display: block;
+      animation: fadeIn 0.25s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .step-lead {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 22px;
+      line-height: 1.5;
+    }
+
+    /* FORM STYLES */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .form-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      background: var(--bg-main);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      color: var(--text-primary);
+      font-size: 14px;
+      transition: var(--transition-base);
+      outline: none;
+    }
+
+    .form-input:focus, .form-select:focus {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+
+    /* SHIFTING RULES CONTAINER */
+    .rules-list {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .rule-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      padding: 7px 10px;
+      border-radius: 4px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      transition: var(--transition-base);
+    }
+
+    .rule-item.valid {
+      color: var(--accent-emerald);
+      border-color: rgba(16, 185, 129, 0.3);
+      background: rgba(16, 185, 129, 0.05);
+    }
+
+    .rule-item.invalid {
+      color: var(--accent-rose);
+      border-color: rgba(244, 63, 94, 0.3);
+      background: rgba(244, 63, 94, 0.05);
+    }
+
+    .rule-icon {
+      font-size: 13px;
+    }
+
+    /* HOSTILE TERMS & CONDITIONS SCROLL CONTAINER */
+    .legal-scroll-box {
+      background: var(--bg-main);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      height: 160px;
+      overflow-y: scroll;
+      padding: 14px;
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 14px;
+      scroll-behavior: smooth;
+    }
+
+    .legal-scroll-box h5 {
+      color: var(--text-secondary);
+      font-size: 12px;
+      margin: 8px 0 4px;
+    }
+
+    .scroll-reset-indicator {
+      font-size: 11px;
+      color: var(--accent-amber);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .checkbox-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .checkbox-wrap input[type="checkbox"] {
+      accent-color: var(--accent-blue);
+      width: 16px;
+      height: 16px;
+    }
+
+    /* MODAL FOOTER & SWAPPING ACTION BUTTONS */
+    .modal-footer {
+      padding: 18px 28px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      background: rgba(15, 23, 42, 0.4);
+      position: relative;
+    }
+
+    /* EVASIVE CONFIRM BUTTON SWAP CONTAINER */
+    .button-swap-container {
+      display: flex;
+      gap: 12px;
+      position: relative;
+    }
+
+    /* SYSTEM QUEUE SIMULATOR MODAL */
+    .queue-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(30, 41, 59, 0.95);
+      backdrop-filter: blur(16px);
+      z-index: 100;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .queue-overlay.active {
+      display: flex;
+    }
+
+    .queue-spinner-ring {
+      width: 48px;
+      height: 48px;
+      border: 3px solid rgba(59, 130, 246, 0.15);
+      border-top-color: var(--accent-blue);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .queue-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .queue-status-text {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      min-height: 20px;
+      font-family: ui-monospace, Menlo, monospace;
+    }
+
+    .queue-bar-track {
+      width: 100%;
+      max-width: 320px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 100px;
+      overflow: hidden;
+      margin-bottom: 12px;
+    }
+
+    .queue-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #3b82f6, #60a5fa);
+      transition: width 0.3s ease;
+      border-radius: 100px;
+    }
+
+    .queue-pct {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-family: ui-monospace, monospace;
+    }
+
+    .error-card-state {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .error-code-badge {
+      background: rgba(244, 63, 94, 0.12);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      color: var(--accent-rose);
+      font-family: ui-monospace, Menlo, monospace;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .error-msg-detail {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 20px;
+      max-width: 400px;
+    }
+
+    /* TOAST SYSTEM */
+    .toast-tray {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 12px 18px;
+      color: var(--text-primary);
+      font-size: 13px;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+      animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      max-width: 360px;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .toast-icon {
+      color: var(--accent-blue);
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Institutional Bar -->
+  <div class="top-strip">
+    <div class="status-badge">
+      <span class="status-dot"></span>
+      Aethelgard Core Enclave: Operational (Latency 14ms)
+    </div>
+    <div style="display:flex; gap: 24px;">
+      <span>Root Cert: SHA-384 / RSA-4096</span>
+      <span>Jurisdiction: EEA / US-FEDRAMP Level 4</span>
+    </div>
+  </div>
+
+  <!-- Main Navigation -->
+  <header>
+    <div class="nav-container">
+      <a href="#" class="brand">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2L3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-9-5z"/>
+          </svg>
+        </div>
+        <div>
+          <span class="brand-name">Aethelgard</span>
+          <span class="brand-tag">v4.81 Enterprise</span>
+        </div>
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#" class="nav-link">Zero-Knowledge Mesh</a></li>
+        <li><a href="#" class="nav-link">Institutional Nodes</a></li>
+        <li><a href="#" class="nav-link">Regulatory Protocols</a></li>
+        <li><a href="#" class="nav-link">API Specification</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="btn btn-ghost btn-sm" onclick="showNotification('Documentation bundle encrypted. Request access via regional delegate.')">Docs</button>
+        <button class="btn btn-primary btn-sm" onclick="openVerificationModal()">Verify Account</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="hero">
+    <div>
+      <div class="hero-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="12" cy="12" r="10"/>
+        </svg>
+        Institutional Cryptographic Gateway • Release 2026.4
+      </div>
+
+      <h1 class="hero-title">
+        Deterministic Identity Attestation for Global Institutions.
+      </h1>
+
+      <p class="hero-subtitle">
+        Eliminate cross-border compliance latency with automated zero-knowledge credentialing. Seamless institutional verification in under 90 seconds.
+      </p>
+
+      <div class="hero-cta-group">
+        <button class="btn btn-primary" style="padding: 12px 24px; font-size: 15px;" onclick="openVerificationModal()">
+          Initiate Attestation Protocol →
+        </button>
+        <button class="btn btn-ghost" style="padding: 12px 24px; font-size: 15px;" onclick="showNotification('Federated demo calendar syncing with regional clock...')">
+          Schedule Sovereign Demo
+        </button>
+      </div>
+
+      <div class="trust-metrics">
+        <div class="metric-item">
+          <h4>$14.2B+</h4>
+          <p>Assets Attested Daily</p>
+        </div>
+        <div class="metric-item">
+          <h4>99.999%</h4>
+          <p>Enclave Consensus</p>
+        </div>
+        <div class="metric-item">
+          <h4>0.00ms</h4>
+          <p>Zero-Knowledge Leaks</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Side Interactive Preview Card -->
+    <div class="preview-card">
+      <div class="preview-header">
+        <div class="preview-title-group">
+          <h3>Enclave Health Index</h3>
+          <p>Node: us-east-4a (Sovereign Primary)</p>
+        </div>
+        <span class="live-chip">● ACTIVE ATTESTATION</span>
+      </div>
+
+      <div class="metric-row">
+        <span class="metric-label">Cryptographic Entropy Level</span>
+        <span class="metric-val" id="entropyMetric">99.984 bits/byte</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Regional Latency Calibration</span>
+        <span class="metric-val" id="latencyMetric">11.4 ms</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Compliance Ledger Hash</span>
+        <span class="metric-val">0x8f4d...319a</span>
+      </div>
+      <div class="metric-row">
+        <span class="metric-label">Delegated Identity Authority</span>
+        <span class="metric-val">Aethelgard Root CA-12</span>
+      </div>
+
+      <div style="margin-top: 24px;">
+        <button class="btn btn-ghost" style="width: 100%;" onclick="openVerificationModal()">
+          Open Attestation Pipeline
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Compliance Trust Strip -->
+  <section class="compliance-bar">
+    <span class="compliance-label">Certified Frameworks</span>
+    <div class="compliance-badges">
+      <span>SOC-2 TYPE II</span>
+      <span>ISO/IEC 27001</span>
+      <span>BASEL III ACCREDITED</span>
+      <span>GDPR ART. 28</span>
+      <span>FEDRAMP HIGH EQUIVALENT</span>
+    </div>
+  </section>
+
+  <!-- ========================================================
+       HOSTILE BUREAUCRATIC MODAL & ONBOARDING LOOP
+       ======================================================== -->
+  <div class="modal-overlay" id="verificationModalOverlay">
+    <div class="modal-window">
+      
+      <!-- Modal Header with Dynamic Step Generator -->
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <h3 id="wizardStepTitle">Institutional Attestation Pipeline</h3>
+          <span class="modal-step-counter" id="wizardStepCounter">Step 1 of 3</span>
+        </div>
+        <button class="modal-close-btn" onclick="closeVerificationModal()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-fill" id="wizardProgressBar"></div>
+      </div>
+
+      <!-- Modal Body Containing The Shifting Stages -->
+      <div class="modal-body">
+
+        <!-- STEP 1: Basic Entity Data -->
+        <div class="step-view active" id="step1View">
+          <p class="step-lead">
+            Provide institutional entity credentials. All fields are cross-referenced in real-time against Interpol & BIS financial registers.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label" for="orgName">Legal Entity Identifier (LEI)</label>
+            <input type="text" class="form-input" id="orgName" placeholder="e.g. 5493001KJTIIGC8Y1R12" autocomplete="off" value="5493001KJTIIGC8Y1R12">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="delegateEmail">Corporate Compliance Officer Email</label>
+            <input type="email" class="form-input" id="delegateEmail" placeholder="officer@institution.ch" autocomplete="off">
+          </div>
+        </div>
+
+        <!-- STEP 2: The Latitude-Sorted Country Selection -->
+        <div class="step-view" id="step2View">
+          <p class="step-lead">
+            Select the designated primary tax and regulatory jurisdiction for this identity enclave.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label" for="countrySelect">
+              Jurisdiction Enclave
+              <span class="form-hint">Sorted by Standard Institutional Index</span>
+            </label>
+            <!-- Deceptively sorted by Geographic Latitude from North to South -->
+            <select class="form-select" id="countrySelect">
+              <option value="" disabled selected>Select regional tax enclave...</option>
+              <option value="SJM">Svalbard & Jan Mayen (+78.22°)</option>
+              <option value="GRL">Greenland (+71.70°)</option>
+              <option value="ISL">Iceland (+64.96°)</option>
+              <option value="FIN">Finland (+61.92°)</option>
+              <option value="NOR">Norway (+60.47°)</option>
+              <option value="SWE">Sweden (+60.12°)</option>
+              <option value="EST">Estonia (+58.59°)</option>
+              <option value="DNK">Denmark (+56.26°)</option>
+              <option value="CAN">Canada (+56.13°)</option>
+              <option value="GBR">United Kingdom (+55.37°)</option>
+              <option value="DEU">Germany (+51.16°)</option>
+              <option value="FRA">France (+46.22°)</option>
+              <option value="USA">United States (+37.09°)</option>
+              <option value="JPN">Japan (+36.20°)</option>
+              <option value="KOR">South Korea (+35.90°)</option>
+              <option value="MAR">Morocco (+31.79°)</option>
+              <option value="MEX">Mexico (+23.63°)</option>
+              <option value="IND">India (+20.59°)</option>
+              <option value="SGP">Singapore (+1.35°)</option>
+              <option value="KEN">Kenya (-0.02°)</option>
+              <option value="BRA">Brazil (-14.23°)</option>
+              <option value="AUS">Australia (-25.27°)</option>
+              <option value="ZAF">South Africa (-30.55°)</option>
+              <option value="CHL">Chile (-35.67°)</option>
+              <option value="ARG">Argentina (-38.41°)</option>
+              <option value="NZL">New Zealand (-40.90°)</option>
+              <option value="ATA">Antarctica (-82.86°)</option>
+            </select>
+            <div style="font-size: 11px; color: var(--text-muted); margin-top: 6px;">
+              * Note: Country index alignment is synchronized with planetary geodetic latitude.
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: Terms & Conditions Auto-Resetting Scroll Box -->
+        <div class="step-view" id="step3View">
+          <p class="step-lead">
+            Review and execute the Master Cryptographic Custody & Governance Agreement (MCCGA).
+          </p>
+
+          <div class="scroll-reset-indicator">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            </svg>
+            Active Document Integrity Monitor: Verifying live buffer state (Resets periodically)
+          </div>
+
+          <div class="legal-scroll-box" id="legalScrollBox">
+            <h5>SECTION 1.1: SCOPE OF ATTESTATION</h5>
+            <p>The institutional subscriber ("Applicant") covenants to provide uninterrupted cryptographic telemetry to the Aethelgard Consensus Gateway. All private key operations are irrevocably notarized across sovereign validators. Failure to maintain continuous bi-directional ping within ±0.002ms may result in involuntary suspension under Basel III Annex 4G.</p>
+            
+            <h5>SECTION 1.2: DETERMINISTIC LIABILITIES</h5>
+            <p>Neither Aethelgard Trust AG nor any affiliated regional validator shall be held liable for stationary execution pipelines, asynchronous ledger forks, or unexpected re-routing through sub-polar oceanic fiber nodes. The Applicant assumes all risk relating to temporal clock skew exceeding 4 picoseconds.</p>
+
+            <h5>SECTION 1.3: AUTOMATED SESSION TERMINATION</h5>
+            <p>In accordance with SOC-2 High Assurance requirements, uncommitted verification sessions that fail to demonstrate continuous manual navigation will automatically purge all local state vectors without prior notification.</p>
+
+            <h5>SECTION 1.4: CROSS-BORDER TAXONOMY</h5>
+            <p>Any dispute arising out of or in connection with this contract, including any question regarding its existence, validity, or termination, shall be referred to and finally resolved by arbitration administered by the Singapore International Arbitration Centre (SIAC) under SIAC Rules for the time being in force, which rules are deemed to be incorporated by reference in this clause.</p>
+
+            <h5>SECTION 1.5: IRREVOCABLE SURRENDER</h5>
+            <p>You have reached the terminus of document bundle #992. By toggling the acknowledgment below, you affirm under penalty of perjury that you have thoroughly parsed all 48 sections without skipping, skimming, or algorithmic summarization.</p>
+          </div>
+
+          <label class="checkbox-wrap">
+            <input type="checkbox" id="termsCheck" disabled>
+            <span>I have meticulously read, verified, and accepted all 48 legal clauses.</span>
+          </label>
+        </div>
+
+        <!-- STEP 4: Shifting Password Rules Input -->
+        <div class="step-view" id="step4View">
+          <p class="step-lead">
+            Generate your Enclave Master Passkey. To guarantee institutional security, passkeys must satisfy real-time consensus constraints.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label" for="passkeyInput">
+              Master Enclave Passkey
+              <span class="form-hint" id="ruleCounterHint">Requirement Matrix: Active</span>
+            </label>
+            <input type="password" class="form-input" id="passkeyInput" placeholder="Enter compliant passkey..." autocomplete="off">
+            
+            <div class="rules-list" id="rulesListContainer">
+              <div class="rule-item invalid" id="rulePrime">
+                <span class="rule-icon">○</span>
+                <span>Rule 1: Must contain at least one prime number (e.g. 2, 3, 5, 7, 11, 13...)</span>
+              </div>
+              <div class="rule-item" id="ruleTemp" style="display:none;">
+                <span class="rule-icon">○</span>
+                <span>Rule 2: Must contain today's recorded ambient temperature in Geneva (14°C)</span>
+              </div>
+              <div class="rule-item" id="ruleEmoji" style="display:none;">
+                <span class="rule-icon">○</span>
+                <span>Rule 3: Must include an authorized governance symbol (💼, 🤝, 🏛️, ⚖️)</span>
+              </div>
+              <div class="rule-item" id="ruleSum" style="display:none;">
+                <span class="rule-icon">○</span>
+                <span>Rule 4: The sum of all numerical digits must equal exactly 37</span>
+              </div>
+              <div class="rule-item" id="ruleAirport" style="display:none;">
+                <span class="rule-icon">○</span>
+                <span>Rule 5: Must contain the 3-letter IATA code of your primary regional node (ZRH)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 5: Final Submission with Evasive Confirm/Cancel Swap -->
+        <div class="step-view" id="step5View">
+          <p class="step-lead">
+            Final Step: Cryptographic attestation bundle compiled. Review and execute the final consensus commitment.
+          </p>
+
+          <div style="background: var(--bg-main); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 18px; margin-bottom: 20px;">
+            <div style="display:flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+              <span style="color:var(--text-secondary)">Bundle Payload Size</span>
+              <span style="color:var(--text-primary); font-family:monospace">48.2 KB</span>
+            </div>
+            <div style="display:flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px;">
+              <span style="color:var(--text-secondary)">Validator Signature Consensus</span>
+              <span style="color:var(--accent-emerald); font-weight:600">32 of 32 Quorum</span>
+            </div>
+            <div style="display:flex; justify-content: space-between; font-size: 13px;">
+              <span style="color:var(--text-secondary)">Attestation Session TTL</span>
+              <span style="color:var(--accent-amber); font-family:monospace">00:42 REMAINING</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer With Swapping Confirm/Cancel Action Logic -->
+      <div class="modal-footer">
+        <div class="button-swap-container" id="buttonSwapContainer">
+          <button class="btn btn-ghost" id="btnSecondaryAction" onclick="handleSecondaryAction()">
+            Cancel Verification
+          </button>
+          <button class="btn btn-primary" id="btnPrimaryAction" onclick="handlePrimaryAction()">
+            Continue Pipeline →
+          </button>
+        </div>
+      </div>
+
+      <!-- SYSTEM QUEUE SIMULATOR OVERLAY -->
+      <div class="queue-overlay" id="systemQueueOverlay">
+        
+        <div id="queueProcessingState">
+          <div class="queue-spinner-ring"></div>
+          <h4 class="queue-title">Synchronizing Consensus State</h4>
+          <p class="queue-status-text" id="queueStatusText">Negotiating zero-knowledge handshake with regional gateway...</p>
+          <div class="queue-bar-track">
+            <div class="queue-bar-fill" id="queueBarFill"></div>
+          </div>
+          <span class="queue-pct" id="queuePctText">0%</span>
+        </div>
+
+        <div class="error-card-state" id="queueErrorState">
+          <span class="error-code-badge">PROTOCOL_ERROR: ERR_STATIONARY_STATE</span>
+          <h4 class="queue-title" style="color: var(--accent-rose); margin-bottom: 8px;">Consensus Pipeline Quiescent</h4>
+          <p class="error-msg-detail">
+            The regional validator pool timed out while awaiting deterministic state confirmation (+7,892ms). The identity bundle has been invalidated in accordance with SOC-2 Section 9.2.
+          </p>
+          <button class="btn btn-primary" onclick="retryQueueHandshake()">
+            Re-Initialize Enclave Handshake
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Tray -->
+  <div class="toast-tray" id="toastTray"></div>
+
+  <!-- ========================================================
+       HOSTILE JAVASCRIPT: BUREAUCRATIC ORCHESTRATION
+       ======================================================== */
+  <script>
+    /* ========================================================
+       1. STATE MANAGEMENT & INFINITE ONBOARDING LOOP
+       ======================================================== */
+    let currentStep = 1;
+    let totalSteps = 3; // Starts at 3, expands to 5, 9, 14, 22...
+    let stepLoopCount = 0;
+
+    const stepTitles = {
+      1: "Step 1: Institutional Legal Baseline",
+      2: "Step 2: Geodetic Tax Enclave Alignment",
+      3: "Step 3: Master Custody Disclosures (MCCGA)",
+      4: "Step 4: Consensus Passkey Attestation",
+      5: "Step 5: Enclave Ledger Finalization"
+    };
+
+    function updateStepUI() {
+      // Deceptive step progression: as you move forward, the finish line retreats!
+      if (currentStep === 1) totalSteps = 3;
+      else if (currentStep === 2) totalSteps = 5;
+      else if (currentStep === 3) totalSteps = 9;
+      else if (currentStep === 4) totalSteps = 14;
+      else if (currentStep === 5) totalSteps = 22;
+
+      document.getElementById('wizardStepTitle').innerText = stepTitles[currentStep] || "Cryptographic Protocol Pipeline";
+      document.getElementById('wizardStepCounter').innerText = `Step ${currentStep} of ${totalSteps}`;
+      
+      const pct = Math.min(95, Math.round((currentStep / totalSteps) * 100));
+      document.getElementById('wizardProgressBar').style.width = pct + '%';
+
+      // Switch step views
+      for (let i = 1; i <= 5; i++) {
+        const v = document.getElementById(`step${i}View`);
+        if (v) v.classList.toggle('active', i === currentStep);
+      }
+
+      // Configure button labels
+      const primaryBtn = document.getElementById('btnPrimaryAction');
+      if (currentStep === 5) {
+        primaryBtn.innerText = "Commit Verification Token";
+      } else {
+        primaryBtn.innerText = "Continue Pipeline →";
+      }
+
+      // Reset swap state if we moved
+      resetButtonSwap();
+    }
+
+    function openVerificationModal() {
+      const overlay = document.getElementById('verificationModalOverlay');
+      overlay.classList.add('active');
+      updateStepUI();
+    }
+
+    function closeVerificationModal() {
+      const overlay = document.getElementById('verificationModalOverlay');
+      overlay.classList.remove('active');
+      showNotification('Verification session paused. Session state cached in temporary memory enclave.');
+    }
+
+    /* ========================================================
+       2. ARTIFICIAL SYSTEM QUEUE WITH 99% 8-SECOND FREEZE
+       ======================================================== */
+    const queueOverlay = document.getElementById('systemQueueOverlay');
+    const queueProcessingState = document.getElementById('queueProcessingState');
+    const queueErrorState = document.getElementById('queueErrorState');
+    const queueStatusText = document.getElementById('queueStatusText');
+    const queueBarFill = document.getElementById('queueBarFill');
+    const queuePctText = document.getElementById('queuePctText');
+
+    const queueMessages = [
+      "Negotiating zero-knowledge handshake with regional gateway...",
+      "Evaluating federated consensus latency across distributed nodes...",
+      "Re-evaluating server latency across secondary validator rings...",
+      "Synchronizing deterministic state machine with Aethelgard Root CA...",
+      "Awaiting final enclave state commitment..."
+    ];
+
+    function triggerSystemQueue(onSuccess) {
+      queueOverlay.classList.add('active');
+      queueProcessingState.style.display = 'block';
+      queueErrorState.style.display = 'none';
+
+      let progress = 0;
+      queueBarFill.style.width = '0%';
+      queuePctText.innerText = '0%';
+      queueStatusText.innerText = queueMessages[0];
+
+      // Step progress up quickly to 99%
+      const interval = setInterval(() => {
+        if (progress < 99) {
+          progress += Math.floor(Math.random() * 20) + 12;
+          if (progress > 99) progress = 99;
+          queueBarFill.style.width = progress + '%';
+          queuePctText.innerText = progress + '%';
+
+          const msgIdx = Math.min(queueMessages.length - 1, Math.floor(progress / 22));
+          queueStatusText.innerText = queueMessages[msgIdx];
+        } else {
+          clearInterval(interval);
+          // PAUSE AT 99% FOR 8 SECONDS
+          queueStatusText.innerText = "Re-evaluating server latency... [Stalled in stationary pipeline]";
+          
+          setTimeout(() => {
+            // Decide whether to advance or throw ERR_STATIONARY_STATE
+            if (currentStep === 5 || Math.random() < 0.35) {
+              // Fail with non-descriptive error code
+              queueProcessingState.style.display = 'none';
+              queueErrorState.style.display = 'flex';
+            } else {
+              // Successfully advance
+              queueOverlay.classList.remove('active');
+              if (onSuccess) onSuccess();
+            }
+          }, 8000);
+        }
+      }, 350);
+    }
+
+    function retryQueueHandshake() {
+      queueOverlay.classList.remove('active');
+      showNotification('Enclave pipeline rebooted. Re-submitting cryptographic payload...');
+      // Retrying drops you back a step!
+      if (currentStep > 1) {
+        currentStep--;
+        updateStepUI();
+      }
+    }
+
+    /* ========================================================
+       3. EVASIVE CONFIRM/CANCEL BUTTON SWAP LOGIC (150ms delay)
+       ======================================================== */
+    const buttonSwapContainer = document.getElementById('buttonSwapContainer');
+    const btnPrimary = document.getElementById('btnPrimaryAction');
+    const btnSecondary = document.getElementById('btnSecondaryAction');
+    let isSwapped = false;
+    let swapTimer = null;
+
+    btnPrimary.addEventListener('mouseenter', () => {
+      // Only swap on steps 4 and 5 for peak insidious deception
+      if (currentStep >= 4 && !isSwapped) {
+        swapTimer = setTimeout(() => {
+          performButtonSwap();
+        }, 150); // 150ms delay: right when user's brain prepares to click!
+      }
+    });
+
+    btnPrimary.addEventListener('mouseleave', () => {
+      if (swapTimer) clearTimeout(swapTimer);
+    });
+
+    function performButtonSwap() {
+      isSwapped = true;
+      // Swap DOM order and classes so "Cancel" is where "Continue" was!
+      buttonSwapContainer.insertBefore(btnPrimary, btnSecondary);
+      
+      btnPrimary.className = "btn btn-ghost";
+      btnPrimary.innerText = "Cancel Verification";
+      
+      btnSecondary.className = "btn btn-primary";
+      btnSecondary.innerText = currentStep === 5 ? "Commit Verification Token" : "Continue Pipeline →";
+    }
+
+    function resetButtonSwap() {
+      isSwapped = false;
+      if (swapTimer) clearTimeout(swapTimer);
+      buttonSwapContainer.insertBefore(btnSecondary, btnPrimary);
+      btnPrimary.className = "btn btn-primary";
+      btnSecondary.className = "btn btn-ghost";
+      btnSecondary.innerText = "Cancel Verification";
+    }
+
+    function handlePrimaryAction() {
+      if (isSwapped) {
+        // User accidentally clicked the swapped Cancel button!
+        triggerAccidentalCancel();
+      } else {
+        processStepAdvance();
+      }
+    }
+
+    function handleSecondaryAction() {
+      if (isSwapped) {
+        // User clicked the swapped primary button
+        processStepAdvance();
+      } else {
+        triggerAccidentalCancel();
+      }
+    }
+
+    function triggerAccidentalCancel() {
+      closeVerificationModal();
+      currentStep = 1;
+      showNotification('Verification Aborted: All temporary credentials purged in accordance with SOC-2.');
+      resetButtonSwap();
+    }
+
+    function processStepAdvance() {
+      // Step validations
+      if (currentStep === 1) {
+        const lei = document.getElementById('orgName').value.trim();
+        if (!lei) {
+          showNotification('LEI Identifier required for compliance audit.');
+          return;
+        }
+      }
+
+      if (currentStep === 2) {
+        const country = document.getElementById('countrySelect').value;
+        if (!country) {
+          showNotification('Please designate a regional jurisdictional tax enclave.');
+          return;
+        }
+      }
+
+      if (currentStep === 3) {
+        const termsCheck = document.getElementById('termsCheck');
+        if (!termsCheck.checked) {
+          showNotification('Mandatory agreement verification required before proceeding.');
+          return;
+        }
+      }
+
+      if (currentStep === 4) {
+        if (!isPasskeyFullyCompliant) {
+          showNotification('Passkey fails real-time institutional consensus constraints.');
+          return;
+        }
+      }
+
+      // Trigger artificial system queue before advancing
+      triggerSystemQueue(() => {
+        if (currentStep < 5) {
+          currentStep++;
+          updateStepUI();
+        } else {
+          // If they somehow reached the end, loop them back with a bureaucratic notice!
+          currentStep = 2;
+          updateStepUI();
+          showNotification('Compliance Rule Update: Regional jurisdiction reassessment required by Basel III.');
+        }
+      });
+    }
+
+    /* ========================================================
+       4. TERMS & CONDITIONS AUTO-RESETTING SCROLL BOX (Every 6s)
+       ======================================================== */
+    const legalBox = document.getElementById('legalScrollBox');
+    const termsCheck = document.getElementById('termsCheck');
+
+    // Only allow checking if scrolled completely to the bottom
+    legalBox.addEventListener('scroll', () => {
+      const atBottom = legalBox.scrollHeight - legalBox.scrollTop <= legalBox.clientHeight + 8;
+      if (atBottom) {
+        termsCheck.disabled = false;
+      }
+    });
+
+    // Reset scroll to top every 6 seconds!
+    setInterval(() => {
+      if (currentStep === 3) {
+        legalBox.scrollTo({ top: 0, behavior: 'smooth' });
+        if (termsCheck.checked) {
+          termsCheck.checked = false;
+          termsCheck.disabled = true;
+          showNotification('Document buffer refreshed (6s TTL). Please re-read and re-certify.');
+        }
+      }
+    }, 6000);
+
+    /* ========================================================
+       5. PASSIVE-AGGRESSIVE SHIFTING PASSWORD RULES
+       ======================================================== */
+    const passInput = document.getElementById('passkeyInput');
+    const rulePrime = document.getElementById('rulePrime');
+    const ruleTemp = document.getElementById('ruleTemp');
+    const ruleEmoji = document.getElementById('ruleEmoji');
+    const ruleSum = document.getElementById('ruleSum');
+    const ruleAirport = document.getElementById('ruleAirport');
+    let isPasskeyFullyCompliant = false;
+
+    const primeNumbers = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97];
+    const allowedEmojis = ['💼', '🤝', '🏛️', '⚖️'];
+
+    passInput.addEventListener('input', () => {
+      const val = passInput.value;
+      
+      // Rule 1: Must contain at least one prime number
+      const hasPrime = primeNumbers.some(p => val.includes(p.toString()));
+      setRuleStatus(rulePrime, hasPrime);
+
+      if (hasPrime) {
+        ruleTemp.style.display = 'flex';
+      } else {
+        ruleTemp.style.display = 'none';
+        ruleEmoji.style.display = 'none';
+        ruleSum.style.display = 'none';
+        ruleAirport.style.display = 'none';
+      }
+
+      // Rule 2: Must contain temperature 14
+      const hasTemp = val.includes('14');
+      setRuleStatus(ruleTemp, hasTemp);
+
+      if (hasPrime && hasTemp) {
+        ruleEmoji.style.display = 'flex';
+      } else {
+        ruleEmoji.style.display = 'none';
+        ruleSum.style.display = 'none';
+        ruleAirport.style.display = 'none';
+      }
+
+      // Rule 3: Must include emoji
+      const hasEmoji = allowedEmojis.some(e => val.includes(e));
+      setRuleStatus(ruleEmoji, hasEmoji);
+
+      if (hasPrime && hasTemp && hasEmoji) {
+        ruleSum.style.display = 'flex';
+      } else {
+        ruleSum.style.display = 'none';
+        ruleAirport.style.display = 'none';
+      }
+
+      // Rule 4: Sum of digits must equal 37
+      const digits = val.match(/\d/g);
+      let digitSum = 0;
+      if (digits) {
+        digitSum = digits.reduce((acc, curr) => acc + parseInt(curr, 10), 0);
+      }
+      const hasSum37 = digitSum === 37;
+      setRuleStatus(ruleSum, hasSum37, hasSum37 ? `Rule 4: Digit sum matched (37)` : `Rule 4: Digit sum is ${digitSum}/37`);
+
+      if (hasPrime && hasTemp && hasEmoji && hasSum37) {
+        ruleAirport.style.display = 'flex';
+      } else {
+        ruleAirport.style.display = 'none';
+      }
+
+      // Rule 5: Regional Node IATA (ZRH)
+      const hasAirport = val.includes('ZRH');
+      setRuleStatus(ruleAirport, hasAirport);
+
+      isPasskeyFullyCompliant = hasPrime && hasTemp && hasEmoji && hasSum37 && hasAirport;
+    });
+
+    function setRuleStatus(el, isValid, customText) {
+      if (isValid) {
+        el.className = 'rule-item valid';
+        el.querySelector('.rule-icon').innerText = '✓';
+      } else {
+        el.className = 'rule-item invalid';
+        el.querySelector('.rule-icon').innerText = '○';
+      }
+      if (customText) {
+        el.querySelector('span:last-child').innerText = customText;
+      }
+    }
+
+    /* ========================================================
+       6. TOAST SYSTEM & DECEPTIVE MICRO-FEEDBACK
+       ======================================================== */
+    function showNotification(msg) {
+      const tray = document.getElementById('toastTray');
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.innerHTML = `
+        <svg class="toast-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="16" x2="12" y2="12"></line>
+          <line x1="12" y1="8" x2="12.01" y2="8"></line>
+        </svg>
+        <span>${msg}</span>
+      `;
+      tray.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(12px)';
+        toast.style.transition = 'all 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Dynamic telemetry fluctuations in the preview card
+    setInterval(() => {
+      const entropy = (99.980 + Math.random() * 0.015).toFixed(3);
+      const latency = (11.0 + Math.random() * 0.8).toFixed(1);
+      document.getElementById('entropyMetric').innerText = `${entropy} bits/byte`;
+      document.getElementById('latencyMetric').innerText = `${latency} ms`;
+    }, 2800);
+  </script>
+</body>
+</html>
